@@ -793,7 +793,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 table {
                                     width: 100%;
                                     border-collapse: collapse;
-                                    margin: 20px 0;
+                                    /* margin: 10px 0; */
                                     font-size: 16px;
                                     text-align: left;
                                     background-color: #f9f9f9;
@@ -806,6 +806,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     border: 1px solid #ddd;
                                     padding: 10px;
                                     max-width: 200px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+
                                 }
                                 table th {
                                     text-align: center;
@@ -850,9 +854,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </tbody>
                                 </table>
                             </div>
-
-                            <br><br>
-
                             <div class="activities-section">
                                 <table>
                                     <thead>
@@ -867,8 +868,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <th>Pace</th>
                                             <th>Transportation</th>
                                             <th>Fee</th>
-                                            <th>Accommodation Type</th>
-                                            <th>Accommodation Cost</th>
                                         </tr>
                                     </thead>
 
@@ -895,8 +894,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                         <td><?php echo htmlspecialchars($activity['Pacing']); ?></td>
                                                         <td><?php echo htmlspecialchars($activity['Transportation']); ?></td>
                                                         <td>PHP <?php echo number_format($activity['Fee'], 2); ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Type']); ?></td>
-                                                        <td>PHP <?php echo number_format($activity['Cost'], 2); ?></td>
                                                     </tr>
                                                     <?php
                                                     $start_time += $duration_per_activity; // Increment the start time

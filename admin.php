@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
+    header("Location: index.php");
+    exit();
+}
+?>
+
+<?php
     $host = 'localhost';
     $db = 'travel_db';   //change this to the name of your db
     $user = 'root';
@@ -160,15 +168,17 @@
 </div>
 
 <!-- [DROP BUTTON] start drop down tables-->
-    <form class="drop-button"method="GET">
-        <select name="table_name" onchange="this.form.submit()">
-
-            <!--generate all the table options from the database in the drop down button-->
-            <?php foreach ($tables as $table): ?>
+<!-- [DROP BUTTON] start drop down tables-->
+<form class="drop-button" method="GET">
+    <select name="table_name" onchange="this.form.submit()">
+        <!-- Generate all the table options from the database in the drop down button, excluding 'admin_name' table -->
+        <?php foreach ($tables as $table): ?>
+            <?php if ($table !== 'admin_users'): ?>
                 <option value="<?= htmlspecialchars($table); ?>" <?= $selectedTable === $table ? 'selected' : '' ?>><?= htmlspecialchars($table); ?></option>
-            <?php endforeach;?>
-        </select>
-    </form>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </select>
+</form>
 <!-- [DROP BUTTON] end drop down table -->
 
 
