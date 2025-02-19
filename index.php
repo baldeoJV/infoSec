@@ -68,13 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Build the SQL query with filters
         $sql = "WITH city_accomodation_union AS (
-            SELECT $city.AttractionID, accomodations.City, $city.Municipality, $city.Attraction, $city.PopularSecluded, $city.Budget, accomodations.Cost, accomodations.Type
+            SELECT $city.AttractionID, accomodations.City, $city.Municipality, $city.Attraction, $city.PopularSecluded, $city.Budget, accomodations.Cost, accomodations.Type, accomodations.Address
             FROM $city
             JOIN accomodations
             ON $city.Municipality = accomodations.Municipality
             )
 
-            SELECT city_accomodation_union.AttractionID, city_accomodation_union.City, city_accomodation_union.Municipality, city_accomodation_union.Attraction, city_accomodation_union.PopularSecluded, city_accomodation_union.Type,
+            SELECT city_accomodation_union.Address, city_accomodation_union.AttractionID, city_accomodation_union.City, city_accomodation_union.Municipality, city_accomodation_union.Attraction, city_accomodation_union.PopularSecluded, city_accomodation_union.Type,
                 activities.ActivityName, activities.Profile, activities.TravelerPreference, activities.Pacing, activities.Environment, activities.Transportation, activities.Fee, city_accomodation_union.Cost
             FROM city_accomodation_union
             JOIN activities
@@ -236,14 +236,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         /* date style */
 
-        [type="text"] {
+        .startDate, .endDate {
             background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
         }
-        [type="text"]::-webkit-inner-spin-button {
+        .startDate::-webkit-inner-spin-button {
             display: none;
         }
-        [type="text"]::-webkit-calendar-picker-indicator {
+        .endDate::-webkit-inner-spin-button {
+            display: none;
+        }
+        .startDate::-webkit-calendar-picker-indicator {
             opacity: 0;
+        }
+        .endDate::-webkit-calendar-picker-indicator {
+            opacity: 0;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stays in place */
+            z-index: 9999; /* Higher than all other elements */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 300px;
         }
 
     </style>
@@ -254,7 +283,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="first-content-container">
                 <div class="first-content-header">
                     <div></div>
-                    <button onclick="window.location.href='admin.php'">Admin</button>
+                    <!-- <button onclick="window.location.href='admin.php'">Admin</button> -->
+                    <button id="adminBtn">Admin</button>
+                </div>
+                <div id="authModal" class="modal">
+                    <div class="modal-content">
+                        <h3>Admin Login</h3>
+                        <input type="text" id="username" placeholder="Username"><br><br>
+                        <input type="password" id="password" placeholder="Password"><br><br>
+                        <button id="loginBtn">Login</button>
+                        <button id="closeBtn">Close</button>
+                        <p id="authMessage" style="color: red;"></p>
+                    </div>
+                </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#authModal").hide(); // Ensures modal is hidden when page loads
+
+            $("#adminBtn").click(function () {
+                $("#authModal").fadeIn(); // Show modal when Admin button is clicked
+                $("#authModal").css("display", "flex"); // make the modal diplay: flex
+            });
+
+            $("#closeBtn").click(function () {
+                $("#authModal").fadeOut(); // Hide modal when Close button is clicked
+                //clear the input fields
+                $("#username").val("");
+                $("#password").val("");
+                $("#authMessage").text("");
+            });
+
+            $("#loginBtn").click(function () {
+                let username = $("#username").val();
+                let password = $("#password").val();
+                console.log(username, password);
+                $.ajax({
+                    url: "authenticate.php",
+                    type: "POST",
+                    data: { username: username, password: password },
+                    success: function (response) {
+                        response = response.trim(); // Remove spaces, newlines, or hidden characters
+                        if (response === "success") {
+                            // $("#authMessage").text("Login successful");
+                            window.location.href = "admin.php";
+                        } else {
+                            $("#authMessage").text(response);
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
                 </div>
 
                 <div class="first-content">
@@ -724,6 +805,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 table th, table td {
                                     border: 1px solid #ddd;
                                     padding: 10px;
+                                    max-width: 200px;
                                 }
                                 table th {
                                     text-align: center;
@@ -752,18 +834,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Accommodation Name</th>
+                                            <th>Accomodation Address</th>
                                             <th>Type</th>
                                             <th>Cost</th>
-                                            <th>Location</th>
+                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><?php echo htmlspecialchars($results_to_display[0]['Name']); ?></td>
+                                            <td><a href="<?php echo htmlspecialchars($results_to_display[0]['Address']); ?>" target="_blank"> <?php echo htmlspecialchars($results_to_display[0]['Address']); ?></a></td>
                                             <td><?php echo htmlspecialchars($results_to_display[0]['Type']); ?></td>
                                             <td>PHP <?php echo number_format($results_to_display[0]['Cost'], 2); ?></td>
-                                            <td><?php echo htmlspecialchars($results_to_display[0]['Location']); ?></td>
+    
                                         </tr>
                                     </tbody>
                                 </table>
