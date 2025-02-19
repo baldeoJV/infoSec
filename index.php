@@ -297,6 +297,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
+                
     <script>
         $(document).ready(function () {
             $("#authModal").hide(); // Ensures modal is hidden when page loads
