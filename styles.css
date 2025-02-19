@@ -18,7 +18,7 @@ body {
 /* Added Position Relative for lighting linear gradient */
 .baner-content {
     position: relative;
-    background-image: url('trav_COPY\images\top-10-bohol (1).jpg');
+    background-image: url('images/top-10-bohol\ \(1\).jpg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -52,7 +52,7 @@ body {
     width: 200px;
     margin-left: 20px;
 
-    background-image: url('https://drive.google.com/thumbnail?id=15YYgojqouP6t2n1Kz-PrNjJigrZGLbrS&sz=w2000');
+    background-image: url('images/467488347_593596710279013_6428450602150268736_n.png');
     background-size: cover;
     background-position: center;
 }
@@ -144,13 +144,13 @@ body {
 }
 
 .box-container:nth-child(1) .box {
-    background-image: url('https://drive.google.com/thumbnail?id=1Vx-cDPq_eifcVXpZ6TRF4GdQNveDGA_Z&sz=w2000');
+    background-image: url('images/471998783_630454972747179_748589887434421622_n.png');
     background-size: cover;
     background-position: center;
 }
 
 .box-container:nth-child(2) .box {
-    background-image: url('https://drive.google.com/thumbnail?id=1wuItZ9r20wRDPrIwiI4plH8iDaR7fn6E&sz=w2000');
+    background-image: url('images/472816387_2164241790639430_2532699437381875116_n.png');
     background-size: cover;
     background-position: center;
 }
@@ -217,52 +217,52 @@ body {
     z-index: 2; /* Ensure content is above the overlay */
 }
 
-.question-box:nth-child(1) {
-    background-image: url('https://drive.google.com/thumbnail?id=1crPWG5pZF7QEDJ0ENsKdLRPNlcgurTUm&sz=w2000');
+.question-box:nth-of-type(1) {
+    background-image: url('images/pexels-valentin-pinisoara-808934417-19207809.jpg');
     background-size: cover;
     background-position: center;
 }
 
 
-.question-box:nth-child(2) {
-    background-image: url('https://drive.google.com/thumbnail?id=1Ayy7n1eRdBh4E-Nj8X0D0YCB3NVHZxR8&sz=w2000');
+.question-box:nth-of-type(2) {
+    background-image: url('images/Palawan-Background.png');
     background-size: cover;
     background-position: center;
 }
 
-.question-box:nth-child(3) {
-    background-image: url('https://drive.google.com/thumbnail?id=1u7NLrbpOJn7q9IdNxLryOhHWjylgYOCu&sz=w2000');
+.question-box:nth-of-type(3) {
+    background-image: url('images/Surfing.jpg');
     background-size: cover;
     background-position: center;
 }
 
-.question-box:nth-child(4) {
-    background-image: url('https://drive.google.com/thumbnail?id=1fe6qmgl-2ZUwjEPu5diKIkd7iTFnHuwv&sz=w2000');
+.question-box:nth-of-type(4) {
+    background-image: url('images/Airplane.jpg');
     background-size: cover;
     background-position: center;
 }
 
-.question-box:nth-child(5) {
-    background-image: url('https://drive.google.com/thumbnail?id=19arzVkZLd_ckJhUIHO3Jo7idPegkRzoq&sz=w2000');
+.question-box:nth-of-type(5) {
+    background-image: url('images/Beach_Volleyball.jpg');
     background-size: cover;
     background-position: center;
 }
 
-.question-box:nth-child(6) {
-    background-image: url('https://drive.google.com/thumbnail?id=1Vx-cDPq_eifcVXpZ6TRF4GdQNveDGA_Z&sz=w2000');
+.question-box:nth-of-type(6) {
+    background-image: url('images/471998783_630454972747179_748589887434421622_n.png');
     background-size: cover;
     background-position: center;
 }
 
-.question-box:nth-child(7) {
-    background-image: url('https://drive.google.com/thumbnail?id=1UxogbBFIVcfwC2GS-bmDSn6QLyH8fFwp&sz=w2000');
+.question-box:nth-of-type(7) {
+    background-image: url('images/pexels-quang-nguyen-vinh-222549-6872748.jpg');
     background-size: cover;
     background-position: center;
 
 }
 
-.question-box:nth-child(8) {
-    background-image: url('https://drive.google.com/thumbnail?id=1OvaZvdynqbDisdLEagyiA5C9GdIHHvEv&sz=w2000');
+.question-box:nth-of-type(8) {
+    background-image: url('images/Road_Trip.jpg');
     background-size: cover;
     background-position: center;
 }
