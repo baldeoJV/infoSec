@@ -871,9 +871,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </thead>
 
                                     <tbody>
-
-
-                                        <?php
+                                    <?php
                                         for ($day = 1; $day <= $days; $day++):
                                             if ($day < $days): // Activity days
                                                 $start_time = strtotime("08:00 AM"); // Starting time for the day's activities

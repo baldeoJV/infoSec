@@ -38,7 +38,7 @@
                                 table {
                                     width: 100%;
                                     border-collapse: collapse;
-                                    margin: 20px 0;
+                                    /* margin: 10px 0; */
                                     font-size: 16px;
                                     text-align: left;
                                     background-color: #f9f9f9;
@@ -50,6 +50,11 @@
                                 table th, table td {
                                     border: 1px solid #ddd;
                                     padding: 10px;
+                                    max-width: 200px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+
                                 }
                                 table th {
                                     text-align: center;
@@ -78,25 +83,20 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Accommodation Name</th>
+                                            <th>Accomodation Address</th>
                                             <th>Type</th>
                                             <th>Cost</th>
-                                            <th>Location</th>
+                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td></td>
-                                            <td>Budget</td>
-                                            <td>PHP 789.00</td>
-                                            <td></td>
-                                        </tr>
+                                            <td><a href="https://www.skyscanner.com.ph/hotels/philippines/el-nido-hotels/el-nido-beach-hotel/ht-128808016?checkin=2024-12-24&amp;checkout=2024-12-25&amp;rooms=1&amp;adults=2&amp;clicked_details_price=8663&amp;correlation_id=430597d3-4369-47e5-a980-bd8ea220f036&amp;currency=PHP&amp;impression_id=aa5d3158-92ec-4a84-bc63-56f9e1bc669c&amp;locale=en-GB&amp;market=PH&amp;priceType=price-per-night&amp;search_cycle_id=abeca2f7c353aaa4825837c8c489d822&amp;search_entity_id=128808016&amp;source=GoogleHpa" target="_blank"> https://www.skyscanner.com.ph/hotels/philippines/el-nido-hotels/el-nido-beach-hotel/ht-128808016?checkin=2024-12-24&amp;checkout=2024-12-25&amp;rooms=1&amp;adults=2&amp;clicked_details_price=8663&amp;correlation_id=430597d3-4369-47e5-a980-bd8ea220f036&amp;currency=PHP&amp;impression_id=aa5d3158-92ec-4a84-bc63-56f9e1bc669c&amp;locale=en-GB&amp;market=PH&amp;priceType=price-per-night&amp;search_cycle_id=abeca2f7c353aaa4825837c8c489d822&amp;search_entity_id=128808016&amp;source=GoogleHpa</a></td>
+                                            <td>Luxury</td>
+                                            <td id="cost">PHP 8,663.00</td>
                                     </tbody>
                                 </table>
                             </div>
-
-                            <br><br>
-
                             <div class="activities-section">
                                 <table>
                                     <thead>
@@ -111,72 +111,24 @@
                                             <th>Pace</th>
                                             <th>Transportation</th>
                                             <th>Fee</th>
-                                            <th>Accommodation Type</th>
-                                            <th>Accommodation Cost</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-
-
-                                                                                            <tr>
+                                                                                        <tr>
                                                         <td style="text-align: center;">Day 1</td>
-                                                        <td>Rock climbing (up Ugong Rock)</td>
+                                                        <td>Swimming</td>
                                                         <td>08:00 AM</td>
-                                                        <td>Puerto Princesa</td>
-                                                        <td>Ugong Rock Adventures</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Fast</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 1,200.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 789.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 1</td>
-                                                        <td>Spelunking (cave exploration)</td>
-                                                        <td>10:00 AM</td>
-                                                        <td>Puerto Princesa</td>
-                                                        <td>Ugong Rock Adventures</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Fast</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 1,000.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 4,476.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 1</td>
-                                                        <td>Hiking</td>
-                                                        <td>12:00 PM</td>
                                                         <td>El nido</td>
                                                         <td>Taraw Cliff</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Fast</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 400.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 8,663.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 2</td>
-                                                        <td>Snorkeling</td>
-                                                        <td>08:00 AM</td>
-                                                        <td>El nido</td>
-                                                        <td>Hidden Beach</td>
-                                                        <td>Adventure and activities</td>
+                                                        <td>Relaxing</td>
                                                         <td>Nature and Outdoors</td>
                                                         <td>Balanced</td>
                                                         <td>Public transport</td>
-                                                        <td>PHP 800.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 935.00</td>
+                                                        <td>PHP 200.00</td>
                                                     </tr>
                                                                                                         <tr>
-                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td style="text-align: center;">Day 1</td>
                                                         <td>Island Hopping</td>
                                                         <td>10:00 AM</td>
                                                         <td>El nido</td>
@@ -186,78 +138,102 @@
                                                         <td>Balanced</td>
                                                         <td>Public transport</td>
                                                         <td>PHP 1,500.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 8,663.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 1</td>
+                                                        <td>Sunset viewing</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>El nido</td>
+                                                        <td>Big Lagoon</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Slow paced</td>
+                                                        <td>Rent a car or motorbike</td>
+                                                        <td>PHP 300.00</td>
                                                     </tr>
                                                                                                         <tr>
                                                         <td style="text-align: center;">Day 2</td>
-                                                        <td>Island Hopping</td>
-                                                        <td>12:00 PM</td>
-                                                        <td>El nido</td>
-                                                        <td>Hidden Beach</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Balanced</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 1,500.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 4,257.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 3</td>
-                                                        <td>Trekking</td>
+                                                        <td>beachside resto and bar</td>
                                                         <td>08:00 AM</td>
                                                         <td>El nido</td>
-                                                        <td>Zipline in Las Cabanas</td>
-                                                        <td>Adventure and activities</td>
+                                                        <td>Big Lagoon</td>
+                                                        <td>Relaxing</td>
                                                         <td>Nature and Outdoors</td>
-                                                        <td>Fast</td>
+                                                        <td>Slow paced</td>
+                                                        <td>Rent a car or motorbike</td>
+                                                        <td>PHP 500.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Exploration of the wildlife center, which houses other animals like bearcats and birds</td>
+                                                        <td>10:00 AM</td>
+                                                        <td>Puerto Princesa</td>
+                                                        <td>Ugong Rock Adventures</td>
+                                                        <td>City exploration</td>
+                                                        <td>Urban</td>
+                                                        <td>Slow paced</td>
                                                         <td>Public transport</td>
                                                         <td>PHP 400.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 8,663.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Island-hopping (visit Starfish Island, Pandan Island, Luli Island, etc.)</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Puerto Princesa</td>
+                                                        <td>Explore Honda Bay Island</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 2,000.00</td>
                                                     </tr>
                                                                                                         <tr>
                                                         <td style="text-align: center;">Day 3</td>
-                                                        <td>Snorkeling</td>
+                                                        <td>Photography (lots of fun, quirky spots for photos)</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Puerto Princesa</td>
+                                                        <td>Palawan Wildlife conversation Center</td>
+                                                        <td>City exploration</td>
+                                                        <td>Urban</td>
+                                                        <td>Slow paced</td>
+                                                        <td>Rent a car or motorbike</td>
+                                                        <td>PHP 500.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>Photography (inside the cave and the unique lake)</td>
                                                         <td>10:00 AM</td>
                                                         <td>Coron</td>
-                                                        <td>Baracuda Lake</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Balanced</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 800.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 120,125.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 3</td>
-                                                        <td>Paddleboarding</td>
-                                                        <td>12:00 PM</td>
-                                                        <td>Coron</td>
-                                                        <td>Twin Lagoon</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Balanced</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 800.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 27,396.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 4</td>
-                                                        <td>Photography (especially at sunset)</td>
-                                                        <td>08:00 AM</td>
-                                                        <td>Coron</td>
-                                                        <td>Mount Tapyas</td>
-                                                        <td>Adventure and activities</td>
+                                                        <td>Siete Pecados Marine Park</td>
+                                                        <td>Relaxing</td>
                                                         <td>Nature and Outdoors</td>
                                                         <td>Slow paced</td>
                                                         <td>Public transport</td>
                                                         <td>PHP 500.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 120,125.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>Photography (inside the cave and the unique lake)</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Coron</td>
+                                                        <td>Siete Pecados Marine Park</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Slow paced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 500.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 4</td>
+                                                        <td>Swimming</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Coron</td>
+                                                        <td>Siete Pecados Marine Park</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 200.00</td>
                                                     </tr>
                                                                                                     <tr class="rest-day">
                                                     <td colspan="12">Day 5 (Rest Day) - Take a break and recharge for your next adventure!</td>

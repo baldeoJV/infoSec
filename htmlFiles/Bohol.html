@@ -38,7 +38,7 @@
                                 table {
                                     width: 100%;
                                     border-collapse: collapse;
-                                    margin: 20px 0;
+                                    /* margin: 10px 0; */
                                     font-size: 16px;
                                     text-align: left;
                                     background-color: #f9f9f9;
@@ -50,6 +50,11 @@
                                 table th, table td {
                                     border: 1px solid #ddd;
                                     padding: 10px;
+                                    max-width: 200px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+
                                 }
                                 table th {
                                     text-align: center;
@@ -78,25 +83,20 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Accommodation Name</th>
+                                            <th>Accomodation Address</th>
                                             <th>Type</th>
                                             <th>Cost</th>
-                                            <th>Location</th>
+                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td></td>
-                                            <td>Budget</td>
-                                            <td>PHP 789.00</td>
-                                            <td></td>
-                                        </tr>
+                                            <td><a href="https://www.skyscanner.com.ph/hotels/philippines/el-nido-hotels/el-nido-beach-hotel/ht-128808016?checkin=2024-12-24&amp;checkout=2024-12-25&amp;rooms=1&amp;adults=2&amp;clicked_details_price=8663&amp;correlation_id=430597d3-4369-47e5-a980-bd8ea220f036&amp;currency=PHP&amp;impression_id=aa5d3158-92ec-4a84-bc63-56f9e1bc669c&amp;locale=en-GB&amp;market=PH&amp;priceType=price-per-night&amp;search_cycle_id=abeca2f7c353aaa4825837c8c489d822&amp;search_entity_id=128808016&amp;source=GoogleHpa" target="_blank"> https://www.skyscanner.com.ph/hotels/philippines/el-nido-hotels/el-nido-beach-hotel/ht-128808016?checkin=2024-12-24&amp;checkout=2024-12-25&amp;rooms=1&amp;adults=2&amp;clicked_details_price=8663&amp;correlation_id=430597d3-4369-47e5-a980-bd8ea220f036&amp;currency=PHP&amp;impression_id=aa5d3158-92ec-4a84-bc63-56f9e1bc669c&amp;locale=en-GB&amp;market=PH&amp;priceType=price-per-night&amp;search_cycle_id=abeca2f7c353aaa4825837c8c489d822&amp;search_entity_id=128808016&amp;source=GoogleHpa</a></td>
+                                            <td>Luxury</td>
+                                            <td id="cost">PHP 16,165.00</td>
                                     </tbody>
                                 </table>
                             </div>
-
-                            <br><br>
-
                             <div class="activities-section">
                                 <table>
                                     <thead>
@@ -111,116 +111,74 @@
                                             <th>Pace</th>
                                             <th>Transportation</th>
                                             <th>Fee</th>
-                                            <th>Accommodation Type</th>
-                                            <th>Accommodation Cost</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-
-
-                                                                                            <tr>
+                                                                                        <tr>
                                                         <td style="text-align: center;">Day 1</td>
-                                                        <td>Family-friendly Rides</td>
-                                                        <td>08:00 AM</td>
-                                                        <td>Panglao</td>
-                                                        <td>Panglao Kartways</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Slow paced</td>
-                                                        <td>Private transfers</td>
-                                                        <td>PHP 500.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 12,938.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 1</td>
-                                                        <td>Beach Relaxation at Alona Beach</td>
-                                                        <td>10:00 AM</td>
-                                                        <td>Panglao</td>
-                                                        <td>Panglao Island</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Urban</td>
-                                                        <td>Balanced</td>
-                                                        <td>Private transfers</td>
-                                                        <td>PHP 2,000.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 16,165.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 1</td>
-                                                        <td>Seafood Restaurant Visitation</td>
-                                                        <td>12:00 PM</td>
-                                                        <td>Panglao</td>
-                                                        <td>Oceanica Resort</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Urban</td>
-                                                        <td>Slow paced</td>
-                                                        <td>Private transfers</td>
-                                                        <td>PHP 500.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 14,517.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 2</td>
-                                                        <td>Obstacle Course</td>
+                                                        <td>Golf</td>
                                                         <td>08:00 AM</td>
                                                         <td>Panglao</td>
                                                         <td>Panglao Golf Sports and Entertainment Parks</td>
                                                         <td>Adventure and activities</td>
                                                         <td>Nature and Outdoors</td>
-                                                        <td>Balanced</td>
+                                                        <td>Slow paced</td>
                                                         <td>Private transfers</td>
-                                                        <td>PHP 1,000.00</td>
-                                                        <td>Luxury</td>
-                                                        <td>PHP 12,938.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 2</td>
-                                                        <td>picnic with a scenic ocean view</td>
-                                                        <td>10:00 AM</td>
-                                                        <td>Anda</td>
-                                                        <td>Quinale Beach</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Balanced</td>
-                                                        <td>Public transport</td>
-                                                        <td>PHP 300.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 4,459.00</td>
-                                                    </tr>
-                                                                                                        <tr>
-                                                        <td style="text-align: center;">Day 2</td>
-                                                        <td>Beachcombing and collecting shells</td>
-                                                        <td>12:00 PM</td>
-                                                        <td>Anda</td>
-                                                        <td>Quinale Beach</td>
-                                                        <td>Adventure and activities</td>
-                                                        <td>Nature and Outdoors</td>
-                                                        <td>Balanced</td>
-                                                        <td>Public transport</td>
                                                         <td>PHP 500.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 1,549.00</td>
                                                     </tr>
                                                                                                         <tr>
-                                                        <td style="text-align: center;">Day 3</td>
-                                                        <td>guided tour</td>
-                                                        <td>08:00 AM</td>
-                                                        <td>Anda</td>
-                                                        <td>Cabagnow Cave Pool</td>
-                                                        <td>Adventure and activities</td>
+                                                        <td style="text-align: center;">Day 1</td>
+                                                        <td>Putting and Chipping Green</td>
+                                                        <td>10:00 AM</td>
+                                                        <td>Panglao</td>
+                                                        <td>Panglao Golf Sports and Entertainment Parks</td>
+                                                        <td>Cultural experiences</td>
                                                         <td>Historical</td>
                                                         <td>Slow paced</td>
                                                         <td>Private transfers</td>
-                                                        <td>PHP 1,000.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 3,185.00</td>
+                                                        <td>PHP 400.00</td>
                                                     </tr>
                                                                                                         <tr>
-                                                        <td style="text-align: center;">Day 3</td>
-                                                        <td>Dive from the edges of the cave pool</td>
+                                                        <td style="text-align: center;">Day 1</td>
+                                                        <td>Island Hopping</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Panglao</td>
+                                                        <td>Panglao Island</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Private transfers</td>
+                                                        <td>PHP 2,500.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Farm Tours</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Panglao</td>
+                                                        <td>Oceanica Resort</td>
+                                                        <td>Cultural experiences</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Private transfers</td>
+                                                        <td>PHP 800.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Photography and Social Time</td>
                                                         <td>10:00 AM</td>
+                                                        <td>Panglao</td>
+                                                        <td>Panglao Kartways</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Urban</td>
+                                                        <td>Balanced</td>
+                                                        <td>Private transfers</td>
+                                                        <td>PHP 2,500.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Dive from the edges of the cave pool</td>
+                                                        <td>12:00 PM</td>
                                                         <td>Anda</td>
                                                         <td>Cabagnow Cave Pool</td>
                                                         <td>Adventure and activities</td>
@@ -228,13 +186,11 @@
                                                         <td>Fast</td>
                                                         <td>Private transfers</td>
                                                         <td>PHP 300.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 4,459.00</td>
                                                     </tr>
                                                                                                         <tr>
                                                         <td style="text-align: center;">Day 3</td>
-                                                        <td>swimming</td>
-                                                        <td>12:00 PM</td>
+                                                        <td>picnic with a scenic ocean view</td>
+                                                        <td>08:00 AM</td>
                                                         <td>Anda</td>
                                                         <td>Quinale Beach</td>
                                                         <td>Adventure and activities</td>
@@ -242,22 +198,42 @@
                                                         <td>Balanced</td>
                                                         <td>Public transport</td>
                                                         <td>PHP 300.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 3,185.00</td>
                                                     </tr>
                                                                                                         <tr>
-                                                        <td style="text-align: center;">Day 4</td>
-                                                        <td>Picnic</td>
-                                                        <td>08:00 AM</td>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>Trekking</td>
+                                                        <td>10:00 AM</td>
                                                         <td>Anda</td>
                                                         <td>Can-Umantad Falls</td>
                                                         <td>Adventure and activities</td>
                                                         <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Private transfers</td>
+                                                        <td>PHP 500.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>Marvel at the enchanting stalactites and stalagmites</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Anda</td>
+                                                        <td>Combento Cave</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Slow paced</td>
+                                                        <td>Rent a car or motorbike</td>
+                                                        <td>PHP 1,000.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 4</td>
+                                                        <td>Learn about the local flora and fauna</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Anda</td>
+                                                        <td>Can-Umantad Falls</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Historical</td>
                                                         <td>Balanced</td>
                                                         <td>Private transfers</td>
-                                                        <td>PHP 300.00</td>
-                                                        <td>Budget</td>
-                                                        <td>PHP 1,040.00</td>
+                                                        <td>PHP 700.00</td>
                                                     </tr>
                                                                                                     <tr class="rest-day">
                                                     <td colspan="12">Day 5 (Rest Day) - Take a break and recharge for your next adventure!</td>
