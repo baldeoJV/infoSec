@@ -154,13 +154,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             // Build the SQL query with filters
             $sql = "WITH city_accomodation_union AS (
-                SELECT $city.AttractionID, accomodations.City, $city.Municipality, $city.Attraction, $city.PopularSecluded, $city.Budget, accomodations.Cost, accomodations.Type
+                SELECT $city.AttractionID, accomodations.City, $city.Municipality, $city.Attraction, $city.PopularSecluded, $city.Budget, accomodations.Cost, accomodations.Type, accomodations.Address
                 FROM $city
                 JOIN accomodations
                 ON $city.Municipality = accomodations.Municipality
                 )
     
-                SELECT city_accomodation_union.AttractionID, city_accomodation_union.City, city_accomodation_union.Municipality, city_accomodation_union.Attraction, city_accomodation_union.PopularSecluded, city_accomodation_union.Type,
+                SELECT city_accomodation_union.Address, city_accomodation_union.AttractionID, city_accomodation_union.City, city_accomodation_union.Municipality, city_accomodation_union.Attraction, city_accomodation_union.PopularSecluded, city_accomodation_union.Type,
                     activities.ActivityName, activities.Profile, activities.TravelerPreference, activities.Pacing, activities.Environment, activities.Transportation, activities.Fee, city_accomodation_union.Cost
                 FROM city_accomodation_union
                 JOIN activities
@@ -706,7 +706,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $days = max(3, $days);
 
                 foreach ($grouped_results as $city_place => $results): 
-                    $first_accommodation = $results[0]; // Get the first accommodation for the city
+                    $first_accommodation = $results[0]['Cost']; // Get the first accommodation for the city
 
                     ob_start(); // Start output buffering for each city
                     ?>
@@ -849,9 +849,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <tr>
                                             <td><a href="<?php echo htmlspecialchars($results_to_display[0]['Address']); ?>" target="_blank"> <?php echo htmlspecialchars($results_to_display[0]['Address']); ?></a></td>
                                             <td><?php echo htmlspecialchars($results_to_display[0]['Type']); ?></td>
-                                            <td>PHP <?php echo number_format($results_to_display[0]['Cost'], 2); ?></td>
-    
-                                        </tr>
+                                            <td id="cost">PHP <?php echo number_format($first_accommodation, 2); ?></td>
                                     </tbody>
                                 </table>
                             </div>
