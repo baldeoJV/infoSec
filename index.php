@@ -664,7 +664,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </button>
                         </center>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; margin-top: 30px;">
+                        <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; margin-top: 30px;">
                             <?php 
                             
 
@@ -739,74 +739,102 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     font-style: italic;
                                     text-align: center;
                                 }
+
+                                .accommodation-section, .activities-section {
+                                    width: 100%;
+                                    margin-bottom: 10px; /* Space between the tables */
+                                }
                             </style>
 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Day</th>
-                                        <th>Activity Name</th>
-                                        <th>Start Time</th>
-                                        <th>Municipality</th>
-                                        <th>Attraction</th>
-                                        <th>Type</th>
-                                        <th>Environment</th>
-                                        <th>Pace</th>
-                                        <th>Transportation</th>
-                                        <th>Fee</th>
-                                        <th>Accommodation Type</th>
-                                        <th>Accommodation Cost</th>
-                                    </tr>
-                                </thead>
+                           <!-- Accommodation Table -->
+                            <div class="accommodation-section">
+                                <h2>Accommodation Details</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Accommodation Name</th>
+                                            <th>Type</th>
+                                            <th>Cost</th>
+                                            <th>Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($results_to_display[0]['Name']); ?></td>
+                                            <td><?php echo htmlspecialchars($results_to_display[0]['Type']); ?></td>
+                                            <td>PHP <?php echo number_format($results_to_display[0]['Cost'], 2); ?></td>
+                                            <td><?php echo htmlspecialchars($results_to_display[0]['Location']); ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                <tbody>
+                            <br><br>
 
-                                    <?php
-                                    for ($day = 1; $day <= $days; $day++):
-                                        if ($day < $days): // Activity days
-                                            $start_time = strtotime("08:00 AM"); // Starting time for the day's activities
-                                            $duration_per_activity = 2 * 60 * 60; // Duration for each activity in seconds (2 hours)
+                            <div class="activities-section">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Day</th>
+                                            <th>Activity Name</th>
+                                            <th>Start Time</th>
+                                            <th>Municipality</th>
+                                            <th>Attraction</th>
+                                            <th>Type</th>
+                                            <th>Environment</th>
+                                            <th>Pace</th>
+                                            <th>Transportation</th>
+                                            <th>Fee</th>
+                                            <th>Accommodation Type</th>
+                                            <th>Accommodation Cost</th>
+                                        </tr>
+                                    </thead>
 
-                                            foreach ($day_schedule[$day] as $activity):
-                                                $formatted_time = date("h:i A", $start_time); // Format the time as HH:MM AM/PM
+                                    <tbody>
+
+
+                                        <?php
+                                        for ($day = 1; $day <= $days; $day++):
+                                            if ($day < $days): // Activity days
+                                                $start_time = strtotime("08:00 AM"); // Starting time for the day's activities
+                                                $duration_per_activity = 2 * 60 * 60; // Duration for each activity in seconds (2 hours)
+
+                                                foreach ($day_schedule[$day] as $activity):
+                                                    $formatted_time = date("h:i A", $start_time); // Format the time as HH:MM AM/PM
+                                                    ?>
+                                                    <tr>
+                                                        <td style="text-align: center;"><?php echo "Day $day"; ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['ActivityName']); ?></td>
+                                                        <td><?php echo $formatted_time; ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Municipality']); ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Attraction']); ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Profile']); ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Environment']); ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Pacing']); ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Transportation']); ?></td>
+                                                        <td>PHP <?php echo number_format($activity['Fee'], 2); ?></td>
+                                                        <td><?php echo htmlspecialchars($activity['Type']); ?></td>
+                                                        <td>PHP <?php echo number_format($activity['Cost'], 2); ?></td>
+                                                    </tr>
+                                                    <?php
+                                                    $start_time += $duration_per_activity; // Increment the start time
+                                                endforeach;
+                                            else: // Rest day
                                                 ?>
-                                                <tr>
-                                                    <td style="text-align: center;"><?php echo "Day $day"; ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['ActivityName']); ?></td>
-                                                    <td><?php echo $formatted_time; ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Municipality']); ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Attraction']); ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Profile']); ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Environment']); ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Pacing']); ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Transportation']); ?></td>
-                                                    <td>PHP <?php echo number_format($activity['Fee'], 2); ?></td>
-                                                    <td><?php echo htmlspecialchars($activity['Type']); ?></td>
-                                                    <td>PHP <?php echo number_format($activity['Cost'], 2); ?></td>
+                                                <tr class="rest-day">
+                                                    <td colspan="12"><?php echo "Day $day (Rest Day)"; ?> - Take a break and recharge for your next adventure!</td>
                                                 </tr>
+                                                
                                                 <?php
-                                                $start_time += $duration_per_activity; // Increment the start time
-                                            endforeach;
-                                        else: // Rest day
-                                            ?>
-                                            <tr class="rest-day">
-                                                <td colspan="12"><?php echo "Day $day (Rest Day)"; ?> - Take a break and recharge for your next adventure!</td>
-                                            </tr>
-                                            
-                                            <?php
-                                        endif;
-                                    endfor;
-                                    ?>
-                                    
-                                    <tr>
-                                        <td colspan="8" style="text-align: center; font-weight: bold;">Accommodation</td>
-                                        <td><?php echo htmlspecialchars($first_accommodation['Type']); ?></td>
-                                        <td colspan="2">PHP <?php echo number_format($first_accommodation['Cost'], 2); ?></td>
-                                    </tr>
+                                            endif;
+                                        endfor;
+                                        ?>
+                                        
 
-                                </tbody>
-                            </table>
-                            
+                                    </tbody>
+                                </table>
+
+                            </div>  
 
                         </div>
                     </div>

@@ -33,7 +33,7 @@
                             Bohol                            </button>
                         </center>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; margin-top: 30px;">
+                        <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; margin-top: 30px;">
                                                         <style>
                                 table {
                                     width: 100%;
@@ -65,27 +65,59 @@
                                     font-style: italic;
                                     text-align: center;
                                 }
+
+                                .accommodation-section, .activities-section {
+                                    width: 100%;
+                                    margin-bottom: 10px; /* Space between the tables */
+                                }
                             </style>
 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Day</th>
-                                        <th>Activity Name</th>
-                                        <th>Start Time</th>
-                                        <th>Municipality</th>
-                                        <th>Attraction</th>
-                                        <th>Type</th>
-                                        <th>Environment</th>
-                                        <th>Pace</th>
-                                        <th>Transportation</th>
-                                        <th>Fee</th>
-                                        <th>Accommodation Type</th>
-                                        <th>Accommodation Cost</th>
-                                    </tr>
-                                </thead>
+                           <!-- Accommodation Table -->
+                            <div class="accommodation-section">
+                                <h2>Accommodation Details</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Accommodation Name</th>
+                                            <th>Type</th>
+                                            <th>Cost</th>
+                                            <th>Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>Mid</td>
+                                            <td>PHP 1,448.00</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                <tbody>
+                            <br><br>
+
+                            <div class="activities-section">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Day</th>
+                                            <th>Activity Name</th>
+                                            <th>Start Time</th>
+                                            <th>Municipality</th>
+                                            <th>Attraction</th>
+                                            <th>Type</th>
+                                            <th>Environment</th>
+                                            <th>Pace</th>
+                                            <th>Transportation</th>
+                                            <th>Fee</th>
+                                            <th>Accommodation Type</th>
+                                            <th>Accommodation Cost</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
 
                                                                                     <tr>
                                                     <td style="text-align: center;">Day 1</td>
@@ -238,9 +270,10 @@
                                         <td colspan="2">PHP 18,401.00</td>
                                     </tr>
 
-                                </tbody>
-                            </table>
-                            
+                                    </tbody>
+                                </table>
+
+                            </div>  
 
                         </div>
                     </div>

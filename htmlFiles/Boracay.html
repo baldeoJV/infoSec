@@ -33,7 +33,7 @@
                             Boracay                            </button>
                         </center>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; margin-top: 30px;">
+                        <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; margin-top: 30px;">
                                                         <style>
                                 table {
                                     width: 100%;
@@ -65,28 +65,39 @@
                                     font-style: italic;
                                     text-align: center;
                                 }
+
+                                .accommodation-section, .activities-section {
+                                    width: 100%;
+                                    margin-bottom: 10px; /* Space between the tables */
+                                }
                             </style>
 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Day</th>
-                                        <th>Activity Name</th>
-                                        <th>Start Time</th>
-                                        <th>Municipality</th>
-                                        <th>Attraction</th>
-                                        <th>Type</th>
-                                        <th>Environment</th>
-                                        <th>Pace</th>
-                                        <th>Transportation</th>
-                                        <th>Fee</th>
-                                        <th>Accommodation Type</th>
-                                        <th>Accommodation Cost</th>
-                                    </tr>
-                                </thead>
+                           <!-- Accommodation Table -->
+                            <div class="accommodation-section">
+                                <h2>Accommodation Details</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Accommodation Name</th>
+                                            <th>Type</th>
+                                            <th>Cost</th>
+                                            <th>Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>Mid</td>
+                                            <td>PHP 1,448.00</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                <tbody>
+                            <br><br>
 
+<<<<<<< HEAD
                                                                                     <tr>
                                                     <td style="text-align: center;">Day 1</td>
                                                     <td>Trycycle Ride to the Top</td>
@@ -237,10 +248,180 @@
                                         <td>Mid</td>
                                         <td colspan="2">PHP 3,386.00</td>
                                     </tr>
+=======
+                            <div class="activities-section">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Day</th>
+                                            <th>Activity Name</th>
+                                            <th>Start Time</th>
+                                            <th>Municipality</th>
+                                            <th>Attraction</th>
+                                            <th>Type</th>
+                                            <th>Environment</th>
+                                            <th>Pace</th>
+                                            <th>Transportation</th>
+                                            <th>Fee</th>
+                                            <th>Accommodation Type</th>
+                                            <th>Accommodation Cost</th>
+                                        </tr>
+                                    </thead>
+>>>>>>> test
 
-                                </tbody>
-                            </table>
-                            
+                                    <tbody>
+
+
+                                                                                            <tr>
+                                                        <td style="text-align: center;">Day 1</td>
+                                                        <td>Kayaking and Paddleboarding</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>Crystal Cove Island</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 1,200.00</td>
+                                                        <td>Budget</td>
+                                                        <td>PHP 2,480.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 1</td>
+                                                        <td>Biking</td>
+                                                        <td>10:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>Mount luho Viewpoint</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 1,000.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,277.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 1</td>
+                                                        <td>parasailing</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>White Beach</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 2,500.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,233.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>parasailing</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>White Beach</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 2,500.00</td>
+                                                        <td>Mid</td>
+                                                        <td>PHP 3,386.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Tide Pool Exploration(Low Tide)</td>
+                                                        <td>10:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>Willys Rock</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 800.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 4,824.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 2</td>
+                                                        <td>Chapel Visiting</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>Willys Rock</td>
+                                                        <td>Cultural experiences</td>
+                                                        <td>Historical</td>
+                                                        <td>Slow paced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 400.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,277.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>ATV Ride (All-Terrain Vehicle)</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>Mount luho Viewpoint</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 500.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,277.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>Snorkeling and Diving</td>
+                                                        <td>10:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>White Beach</td>
+                                                        <td>Relaxing</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 3,000.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,277.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 3</td>
+                                                        <td>kite surfing</td>
+                                                        <td>12:00 PM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>White Beach</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Fast</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 2,000.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,233.00</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td style="text-align: center;">Day 4</td>
+                                                        <td>Snorkeling and Swimming</td>
+                                                        <td>08:00 AM</td>
+                                                        <td>Boracay Island</td>
+                                                        <td>Crystal Cove Island</td>
+                                                        <td>Adventure and activities</td>
+                                                        <td>Nature and Outdoors</td>
+                                                        <td>Balanced</td>
+                                                        <td>Public transport</td>
+                                                        <td>PHP 1,000.00</td>
+                                                        <td>Luxury</td>
+                                                        <td>PHP 9,233.00</td>
+                                                    </tr>
+                                                                                                    <tr class="rest-day">
+                                                    <td colspan="12">Day 5 (Rest Day) - Take a break and recharge for your next adventure!</td>
+                                                </tr>
+                                                
+                                                                                        
+
+                                    </tbody>
+                                </table>
+
+                            </div>  
 
                         </div>
                     </div>
