@@ -362,12 +362,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
+        <!-- display the number of visited (counter in database) -->
+        <?php
+            $sql = "SELECT * FROM number_of_visitors";
+            $result = $conn->query($sql);
+            $visitor_count = $result->fetch_assoc();
+            // print_r($row['visitor_count']);
+        ?>
+
         <!-- Environment Banner -->
          <center>
 
          <div style="text-align: center; background: linear-gradient(135deg, #a5d6a7, #81c784); color: white; padding: 20px 30px ; border-radius: 0px; max-width: 1600px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
             <h1 style="margin: 0; font-size: 2.5rem;">We Plant Trees for Every Search</h1>
             <p style="margin: 15px 0 0; font-size: 1.2rem;">Join us in making the world greener, one search at a time.</p>
+            <p style="margin: 15px 0 0; font-size: 1.2rem;">Number of Visitors: <?php echo $visitor_count['visitor_count']; ?></p>
             <!-- <button onclick="alert('Thank you for supporting our mission!')" style="margin-top: 20px; padding: 10px 20px; font-size: 1rem; color: #388e3c; background-color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.3s;">Learn More</button> -->
         </div>
             
@@ -672,9 +681,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>
 
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+            
+            <!-- increse the number of visitors by 1-->
+            <?php
+                // update the number of visitors
+                $sql = "UPDATE number_of_visitors SET visitor_count = visitor_count + 1";
+                $result = $conn->query($sql);
+            ?>
            
             <div class="results-section">
-                <?php 
+            <?php
                 $results_to_display = (isset($all_results1) && count($all_results1) >= 3) ? $all_results1 : $all_results2;
 
                 $message = (isset($all_results1) && count($all_results1) >= 3)
