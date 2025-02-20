@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($hashed_input_password === $password_hash) {
             $_SESSION['admin_logged_in'] = true;
+            $_SESSION['LAST_ACTIVITY'] = time(); // Set session time **only after login**
             echo "success";
         } else {
             echo "Incorrect password!";

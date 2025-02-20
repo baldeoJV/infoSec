@@ -1,10 +1,61 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     header("Location: index.php");
     exit();
 }
+
+$session_timeout = 15; // 15 seconds for testing 
+
+if (isset($_SESSION['LAST_ACTIVITY'])) {
+    $session_lifetime = time() - $_SESSION['LAST_ACTIVITY'];
+
+    if ($session_lifetime > $session_timeout) {
+        session_unset();
+        session_destroy();
+
+        // JavaScript confirm box to let user choose
+        echo "<script>
+        if (confirm('Your session has expired. Click OK to return to login or Cancel to stay (will not work).')) {
+                window.location.href = 'index.php';
+                }    
+        </script>";    
+        exit();
+    }    
+}    
+
+$_SESSION['LAST_ACTIVITY'] = time();
 ?>
+
+<!-- for checking session -->
+<script>
+    function resetSessionTimer() {
+        fetch("reset_session.php") // Calls a PHP file to update last activity
+            .catch(error => console.error("Error resetting session:", error));
+    }
+
+    // Listen for user activity (mouse, keyboard, touch)
+    document.addEventListener("mousemove", resetSessionTimer);
+    document.addEventListener("keydown", resetSessionTimer);
+    document.addEventListener("scroll", resetSessionTimer);
+    document.addEventListener("click", resetSessionTimer);
+
+    // Check session every 5 seconds
+    function checkSession() {
+        fetch("check_session.php")
+            .then(response => response.json())
+            .then(data => {
+                if (data.expired) {
+                    alert("Your session has expired. Click OK to return to login.");
+                    window.location.href = "index.php"; 
+                }
+            })
+            .catch(error => console.error("Error checking session:", error));
+    }
+    // Check session every minute
+    setInterval(checkSession, 60000); // 1 minute
+</script>
 
 <?php
     $host = 'localhost';
@@ -19,23 +70,23 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
         $pdo = new PDO($dsn, $user, $pass);
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
-    }
+    }    
 
     //fetch table names from the database
         $query = $pdo->query("SHOW TABLES");
         $tables = $query->fetchAll(PDO::FETCH_COLUMN);
 
-    //select a table on the drop down (form)
+    //select a table on the drop down (form)    
         $selectedTable = isset($_GET['table_name']) ? $_GET['table_name'] : 'accomodations'; //default table (make sure to change this to the name of your table)
 
-    // Fetch column names of the selected table
+    // Fetch column names of the selected table    
         $query = $pdo->query("DESCRIBE $selectedTable");
         $columns = $query->fetchAll(PDO::FETCH_COLUMN);
 
-    // [READ] Fetch the data [rows] of the selected table
+    // [READ] Fetch the data [rows] of the selected table    
         $dataQuery = $pdo->query("SELECT * FROM $selectedTable");
         $rows = $dataQuery->fetchAll(PDO::FETCH_ASSOC);
-?>
+?>        
 
 <!-- [EDIT, SUBMIT & DELETE] -->
 <?php
@@ -51,10 +102,10 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             $columnsArray[] = $column; // Add column name
             $placeholdersArray[] = ":$column"; // Add placeholder
             $values[$column] = $_POST[$column] ?? null; // Check if POST value exists
-        }
-    }  
+        }    
+    }      
 
-// [INSERT]
+// [INSERT]    
     if (isset($_POST['submit'])) {
 
         // Build the SQL query dynamically
@@ -72,10 +123,10 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             exit;
         } catch (PDOException $e) {
             echo "<p>Error inserting data: " . $e->getMessage() . "</p>";
-        }
-    }
+        }    
+    }    
 
-// [UPDATE]  
+// [UPDATE]      
 
     //fetch the data from table to text field
     if (isset($_GET['edit'])) { 
@@ -97,11 +148,11 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                     // Pre-fill the text fields with data
                     echo "<script>
                         document.getElementById('$column').value = " . json_encode($rowToEdit[$column]) . ";
-                    </script>";
-                }
-            }
-        }
-    }
+                    </script>";    
+                }    
+            }    
+        }    
+    }    
 
     // update the record
     if (isset($_POST['update'])) {
@@ -111,7 +162,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
         } else {
             echo "<p>No ID provided for update.</p>";
             exit;
-        }
+        }    
 
         // Prepare the columns and their updated values
         $updateColumns = [];
@@ -122,8 +173,8 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                 // Add column and its new value from POST data
                 $updateColumns[] = "$column = :$column";
                 $updateValues[$column] = $_POST[$column] ?? null; // Use form data
-            }
-        }
+            }    
+        }    
 
         // Build the SQL query to update the record
         $setString = implode(", ", $updateColumns); // Prepare the SET part of the query
@@ -145,10 +196,10 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             exit;
         } catch (PDOException $e) {
             echo "<p>Error updating data: " . $e->getMessage() . "</p>";
-        }
-    }
+        }    
+    }    
 
-// [DELETE]
+// [DELETE]    
     if (isset($_GET['del'])) {
         $code = $_GET['del']; 
         $sql = "DELETE FROM $selectedTable WHERE id = :id"; 
@@ -159,15 +210,15 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
         // remain in the same table
         header("Location: ?table_name=" . urlencode($selectedTable)); 
         exit;
-    }
-?>
+    }    
+?>    
+
 
 <!-- Moving Header -->
 <div class="option-header">
     <button onclick="window.location.href='index.php'">Front</button>
 </div>
 
-<!-- [DROP BUTTON] start drop down tables-->
 <!-- [DROP BUTTON] start drop down tables-->
 <form class="drop-button" method="GET">
     <select name="table_name" onchange="this.form.submit()">
@@ -511,6 +562,21 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
 <!-- [SCRIPTS] -->
 
 <script>
+
+function checkSession() {
+    fetch("check_session.php")
+        .then(response => response.json())
+        .then(data => {
+            if (data.expired) {
+                alert("Your session has expired. Click OK to return to login.");
+                window.location.href = "index.php"; // Redirect to login
+            }
+        })
+        .catch(error => console.error("Error checking session:", error));
+}
+
+// Check session every minute
+setInterval(checkSession, 60000); // 1 minute
 
 // Function to toggle buttons to "Edit" mode
 function toggleButtons() {
