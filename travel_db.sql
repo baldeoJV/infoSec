@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 19, 2025 at 02:51 PM
+-- Generation Time: Feb 20, 2025 at 09:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -634,6 +634,23 @@ INSERT INTO `flight` (`id`, `Flight_from`, `Flight_to`, `Date_Departure`, `Date_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `number_of_visitors`
+--
+
+CREATE TABLE `number_of_visitors` (
+  `visitor_count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `number_of_visitors`
+--
+
+INSERT INTO `number_of_visitors` (`visitor_count`) VALUES
+(132);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `palawanattractions`
 --
 
@@ -745,7 +762,7 @@ ALTER TABLE `palawanattractions`
 -- AUTO_INCREMENT for table `accomodations`
 --
 ALTER TABLE `accomodations`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `activities`
