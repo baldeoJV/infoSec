@@ -251,7 +251,8 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                             <?php
                             // Determine the input type based on the column data type and set the limit length
                                 $inputType = 'text'; // Default input type
-                                $maxLength = ''; //max length
+                                $maxLength = ''; // Max length
+                                $pattern = ''; // Pattern for input validation
                                 $query = $pdo->query("SHOW COLUMNS FROM $selectedTable LIKE '$column'");
                                 $columnInfo = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -274,6 +275,25 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                                     // if the data type is a boolean (true/false)
                                     } elseif (strpos($dataType, 'bool') !== false) {
                                         $inputType = 'checkbox';
+
+                                    // if the data type is an email
+                                    } elseif (strpos($column, 'email') !== false) {
+                                        $inputType = 'email';
+                                        $maxLength = 'maxlength="255" minlength="5"';
+                                        $pattern = 'pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"';
+
+                                    // if the data type is a URL
+                                    } elseif (strpos($column, 'url') !== false) {
+                                        $inputType = 'url';
+                                        $maxLength = 'maxlength="255" minlength="5"';
+                                        $pattern = 'pattern="https?://.+"';
+
+                                    // if the data type is a phone number
+                                    } elseif (strpos($column, 'phone') !== false) {
+                                        $inputType = 'tel';
+                                        $maxLength = 'maxlength="15" minlength="10"';
+                                        $pattern = 'pattern="[0-9]{10,15}"';
+
                                     // else, use the default text input
                                     } else {
                                         $maxLength = 'maxlength="255" minlength="1"'; // Max and min length for text
@@ -292,6 +312,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                                 placeholder="Enter <?= ucfirst(str_replace('_', ' ', $column)); ?>" 
                                 style="width: 100%;"
                                 <?= $maxLength; ?>
+                                <?= $pattern; ?>
                                 required>
                         </td>
                     </tr>
