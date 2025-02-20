@@ -706,6 +706,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 foreach ($grouped_results as $city_place => $results): 
                     $first_accommodation = $results[0]['Cost']; // Get the first accommodation for the city
+                    $first_address = $results[0]['Address']; // Get the first address for the city
+                    $first_type = $results[0]['Type']; // Get the first type for the city
 
                     ob_start(); // Start output buffering for each city
                     ?>
@@ -846,8 +848,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><a href="<?php echo htmlspecialchars($results_to_display[0]['Address']); ?>" target="_blank"> <?php echo htmlspecialchars($results_to_display[0]['Address']); ?></a></td>
-                                            <td><?php echo htmlspecialchars($results_to_display[0]['Type']); ?></td>
+                                            <td><a href="<?php echo htmlspecialchars($first_address); ?>" target="_blank"> <?php echo htmlspecialchars($first_address); ?></a></td>
+                                            <td><?php echo htmlspecialchars($first_type); ?></td>
                                             <td id="cost">PHP <?php echo number_format($first_accommodation, 2); ?></td>
                                     </tbody>
                                 </table>
