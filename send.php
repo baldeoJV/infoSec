@@ -51,8 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if (mail($to, $subject, $email_body, $headers)) {
             echo "<script>alert('Email sent successfully with attachment!');</script>";
+            // after user click ok, redirect to the index page
+            echo "<script>window.location.href = 'index.php';</script>";
         } else {
             echo "<script>alert('Failed to send the email. Please try again.');</script>";
+            // after user click ok, redirect to the index page
+            echo "<script>window.location.href = 'index.php';</script>";
         }
     } catch (Exception $e) {
         echo "Exception: " . $e->getMessage();
