@@ -684,271 +684,277 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- increse the number of visitors by 1-->
             <?php
-                // update the number of visitors
-                $sql = "UPDATE number_of_visitors SET visitor_count = visitor_count + 1";
-                $result = $conn->query($sql);
+            // update the number of visitors
+            $sql = "UPDATE number_of_visitors SET visitor_count = visitor_count + 1";
+            $result = $conn->query($sql);
             ?>
            
             <div class="results-section">
             <?php
-                $results_to_display = (isset($all_results1) && count($all_results1) >= 3) ? $all_results1 : $all_results2;
+            $results_to_display = (isset($all_results1) && count($all_results1) >= 3) ? $all_results1 : $all_results2;
 
-                $message = (isset($all_results1) && count($all_results1) >= 3)
-                    ? "Recommended Activities Based on Your Preferences"
-                    : "Sorry we couldn't find activities that would best suit your preferences. But we found some that might pique your interest";
-                ?>
-                <h1 style="margin: 1%;"><?php echo $message; ?></h1>
+            $message = (isset($all_results1) && count($all_results1) >= 3)
+            ? "Recommended Activities Based on Your Preferences"
+            : "Sorry we couldn't find activities that would best suit your preferences. But we found some that might pique your interest";
+            ?>
+            <h1 style="margin: 1%;"><?php echo $message; ?></h1>
+            <?php 
+            $grouped_results = [];
+            foreach ($results_to_display as $row) {
+            $grouped_results[$row['City']][] = $row;
+            }
+
+            // Date range picker input
+            $start_date = isset($_POST['startDate']) ? $_POST['startDate'] : null;
+            $end_date = isset($_POST['endDate']) ? $_POST['endDate'] : null;
+
+            // Calculate the number of days between the selected dates
+            if ($start_date && $end_date) {
+            $start_timestamp = strtotime($start_date);
+            $end_timestamp = strtotime($end_date);
+            $days = ceil(($end_timestamp - $start_timestamp) / (60 * 60 * 24)) + 1; // Inclusive of start and end date
+            } else {
+            $days = 5; // Default to 5 days if no range is selected
+            }
+
+            // Ensure at least 2 days for activities and rest
+            $days = max(3, $days);
+
+            foreach ($grouped_results as $city_place => $results): 
+            $first_accommodation = $results[0]['Cost']; // Get the first accommodation for the city
+            $first_address = $results[0]['Address']; // Get the first address for the city
+            $first_type = $results[0]['Type']; // Get the first type for the city
+
+            ob_start(); // Start output buffering for each city
+            ?>
+            <div class="city-results">
+            <center>
+                <button id="<?php echo preg_replace('/[^a-zA-Z0-9]/', '_', $city_place); ?>" 
+                onclick="window.location.href='email.php?city=<?php echo urlencode($city_place); ?>'" 
+                class="city_button" 
+                style="
+                align-items: center;
+                background-color: #fff;
+                border-radius: 12px;
+                border: 1px solid #121212 !important;
+                box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
+                box-sizing: border-box;
+                color: #121212;
+                cursor: pointer;
+                display: inline-flex;
+                flex: 1 1 auto;
+                font-family: Inter, sans-serif;
+                font-size: 1.2rem;
+                font-weight: 700;
+                justify-content: center;
+                line-height: 1;
+                margin: auto; /* Center the button */
+                outline: none;
+                padding: 1rem 1.2rem;
+                text-align: center;
+                text-decoration: none;
+                transition: box-shadow .2s, -webkit-box-shadow .2s;
+                white-space: nowrap;
+                border: 0;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;">
+                <?php echo $city_place; ?>
+                </button>
+            </center>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; margin-top: 30px;">
                 <?php 
-                $grouped_results = [];
-                foreach ($results_to_display as $row) {
-                    $grouped_results[$row['City']][] = $row;
+                
+
+
+                // Scheduling Algorithm with Municipality Grouping and Consecutive-Day Assignment
+                $activity_days = $days - 1; // Reserve the last day for rest
+                $day_schedule = array_fill(1, $activity_days, []); // Initialize schedule for activity days
+
+                // Group activities by Municipality
+                $municipality_groups = [];
+                foreach ($results as $activity) {
+                $municipality_groups[$activity['Municipality']][] = $activity;
                 }
 
-                // Date range picker input
-                $start_date = isset($_POST['startDate']) ? $_POST['startDate'] : null;
-                $end_date = isset($_POST['endDate']) ? $_POST['endDate'] : null;
+                // Assign each municipality to consecutive days
+                $day_index = 1;
+                foreach ($municipality_groups as $municipality => $activities) {
+                $remaining_activities = count($activities);
 
-                // Calculate the number of days between the selected dates
-                if ($start_date && $end_date) {
-                    $start_timestamp = strtotime($start_date);
-                    $end_timestamp = strtotime($end_date);
-                    $days = ceil(($end_timestamp - $start_timestamp) / (60 * 60 * 24)) + 1; // Inclusive of start and end date
-                } else {
-                    $days = 5; // Default to 5 days if no range is selected
+                while ($remaining_activities > 0) {
+                // Determine the number of slots available for this day
+                $current_day_slots = ceil(count($results) / $activity_days) - count($day_schedule[$day_index]);
+
+                // Add as many activities as can fit into the current day
+                $to_add = array_slice($activities, 0, $current_day_slots);
+                $day_schedule[$day_index] = array_merge($day_schedule[$day_index], $to_add);
+
+                // Remove scheduled activities from the municipality's list
+                $activities = array_slice($activities, count($to_add));
+                $remaining_activities -= count($to_add);
+
+                // If there are still activities left for this municipality, move to the next day
+                if ($remaining_activities > 0) {
+                $day_index++;
+                if ($day_index > $activity_days) {
+                    $day_index = 1; // Wrap around to the first day if we exceed the last activity day
+                }
+                }
+                }
                 }
 
-                // Ensure at least 2 days for activities and rest
-                $days = max(3, $days);
+                // Display activities as a styled table
+                ?>
+                <style>
+                table {
+                width: 100%;
+                border-collapse: collapse;
+                /* margin: 10px 0; */
+                font-size: 16px;
+                text-align: left;
+                background-color: #f9f9f9;
+                }
+                table thead {
+                background-color: #333;
+                color: #fff;
+                }
+                table th, table td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                max-width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
 
-                foreach ($grouped_results as $city_place => $results): 
-                    $first_accommodation = $results[0]['Cost']; // Get the first accommodation for the city
-                    $first_address = $results[0]['Address']; // Get the first address for the city
-                    $first_type = $results[0]['Type']; // Get the first type for the city
+                }
+                table th {
+                text-align: center;
+                }
+                table tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+                }
+                table tbody tr:hover {
+                background-color: #f1f1f1;
+                }
+                .rest-day {
+                background-color: #fffae6;
+                font-style: italic;
+                text-align: center;
+                }
 
-                    ob_start(); // Start output buffering for each city
+                .accommodation-section, .activities-section {
+                width: 100%;
+                margin-bottom: 10px; /* Space between the tables */
+                }
+                </style>
+
+               <!-- Accommodation Table -->
+                <div class="accommodation-section">
+                <h2>Accommodation Details</h2>
+                <table>
+                <thead>
+                <tr>
+                    <th>Accomodation Address</th>
+                    <th>Type</th>
+                    <th>Cost</th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="<?php echo htmlspecialchars($first_address); ?>" target="_blank"> <?php echo htmlspecialchars($first_address); ?></a></td>
+                    <td><?php echo htmlspecialchars($first_type); ?></td>
+                    <td id="cost">PHP <?php echo number_format($first_accommodation, 2); ?></td>
+                </tbody>
+                </table>
+                </div>
+                <div class="activities-section">
+                <table>
+                <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Activity Name</th>
+                    <th>Start Time</th>
+                    <th>Municipality</th>
+                    <th>Attraction</th>
+                    <th>Type</th>
+                    <th>Environment</th>
+                    <th>Pace</th>
+                    <th>Transportation</th>
+                    <th>Fee</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <?php
+                $listed_activities = []; // Track listed activities
+
+                for ($day = 1; $day <= $days; $day++):
+                    if ($day < $days): // Activity days
+                    $start_time = strtotime("08:00 AM"); // Starting time for the day's activities
+                    $duration_per_activity = 2 * 60 * 60; // Duration for each activity in seconds (2 hours)
+
+                    foreach ($day_schedule[$day] as $activity):
+                    if (in_array($activity['ActivityName'], $listed_activities)) {
+                    continue; // Skip already listed activities
+                    }
+                    $listed_activities[] = $activity['ActivityName']; // Mark activity as listed
+                    $formatted_time = date("h:i A", $start_time); // Format the time as HH:MM AM/PM
                     ?>
-                    <div class="city-results">
-                        <center>
-                            <button id="<?php echo preg_replace('/[^a-zA-Z0-9]/', '_', $city_place); ?>" 
-                                    onclick="window.location.href='email.php?city=<?php echo urlencode($city_place); ?>'" 
-                                    class="city_button" 
-                                    style="
-                                align-items: center;
-                                background-color: #fff;
-                                border-radius: 12px;
-                                border: 1px solid #121212 !important;
-                                box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
-                                box-sizing: border-box;
-                                color: #121212;
-                                cursor: pointer;
-                                display: inline-flex;
-                                flex: 1 1 auto;
-                                font-family: Inter, sans-serif;
-                                font-size: 1.2rem;
-                                font-weight: 700;
-                                justify-content: center;
-                                line-height: 1;
-                                margin: auto; /* Center the button */
-                                outline: none;
-                                padding: 1rem 1.2rem;
-                                text-align: center;
-                                text-decoration: none;
-                                transition: box-shadow .2s, -webkit-box-shadow .2s;
-                                white-space: nowrap;
-                                border: 0;
-                                user-select: none;
-                                -webkit-user-select: none;
-                                touch-action: manipulation;">
-                            <?php echo $city_place; ?>
-                            </button>
-                        </center>
-                        
-                        <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; margin-top: 30px;">
-                            <?php 
-                            
-
-
-                            // Scheduling Algorithm with Municipality Grouping and Consecutive-Day Assignment
-                            $activity_days = $days - 1; // Reserve the last day for rest
-                            $day_schedule = array_fill(1, $activity_days, []); // Initialize schedule for activity days
-
-                            // Group activities by Municipality
-                            $municipality_groups = [];
-                            foreach ($results as $activity) {
-                                $municipality_groups[$activity['Municipality']][] = $activity;
-                            }
-
-                            // Assign each municipality to consecutive days
-                            $day_index = 1;
-                            foreach ($municipality_groups as $municipality => $activities) {
-                                $remaining_activities = count($activities);
-
-                                while ($remaining_activities > 0) {
-                                    // Determine the number of slots available for this day
-                                    $current_day_slots = ceil(count($results) / $activity_days) - count($day_schedule[$day_index]);
-
-                                    // Add as many activities as can fit into the current day
-                                    $to_add = array_slice($activities, 0, $current_day_slots);
-                                    $day_schedule[$day_index] = array_merge($day_schedule[$day_index], $to_add);
-
-                                    // Remove scheduled activities from the municipality's list
-                                    $activities = array_slice($activities, count($to_add));
-                                    $remaining_activities -= count($to_add);
-
-                                    // If there are still activities left for this municipality, move to the next day
-                                    if ($remaining_activities > 0) {
-                                        $day_index++;
-                                        if ($day_index > $activity_days) {
-                                            $day_index = 1; // Wrap around to the first day if we exceed the last activity day
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Display activities as a styled table
-                            ?>
-                            <style>
-                                table {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                    /* margin: 10px 0; */
-                                    font-size: 16px;
-                                    text-align: left;
-                                    background-color: #f9f9f9;
-                                }
-                                table thead {
-                                    background-color: #333;
-                                    color: #fff;
-                                }
-                                table th, table td {
-                                    border: 1px solid #ddd;
-                                    padding: 10px;
-                                    max-width: 200px;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-
-                                }
-                                table th {
-                                    text-align: center;
-                                }
-                                table tbody tr:nth-child(even) {
-                                    background-color: #f2f2f2;
-                                }
-                                table tbody tr:hover {
-                                    background-color: #f1f1f1;
-                                }
-                                .rest-day {
-                                    background-color: #fffae6;
-                                    font-style: italic;
-                                    text-align: center;
-                                }
-
-                                .accommodation-section, .activities-section {
-                                    width: 100%;
-                                    margin-bottom: 10px; /* Space between the tables */
-                                }
-                            </style>
-
-                           <!-- Accommodation Table -->
-                            <div class="accommodation-section">
-                                <h2>Accommodation Details</h2>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Accomodation Address</th>
-                                            <th>Type</th>
-                                            <th>Cost</th>
-                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><a href="<?php echo htmlspecialchars($first_address); ?>" target="_blank"> <?php echo htmlspecialchars($first_address); ?></a></td>
-                                            <td><?php echo htmlspecialchars($first_type); ?></td>
-                                            <td id="cost">PHP <?php echo number_format($first_accommodation, 2); ?></td>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="activities-section">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Day</th>
-                                            <th>Activity Name</th>
-                                            <th>Start Time</th>
-                                            <th>Municipality</th>
-                                            <th>Attraction</th>
-                                            <th>Type</th>
-                                            <th>Environment</th>
-                                            <th>Pace</th>
-                                            <th>Transportation</th>
-                                            <th>Fee</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <?php
-                                        for ($day = 1; $day <= $days; $day++):
-                                            if ($day < $days): // Activity days
-                                                $start_time = strtotime("08:00 AM"); // Starting time for the day's activities
-                                                $duration_per_activity = 2 * 60 * 60; // Duration for each activity in seconds (2 hours)
-
-                                                foreach ($day_schedule[$day] as $activity):
-                                                    $formatted_time = date("h:i A", $start_time); // Format the time as HH:MM AM/PM
-                                                    ?>
-                                                    <tr>
-                                                        <td style="text-align: center;"><?php echo "Day $day"; ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['ActivityName']); ?></td>
-                                                        <td><?php echo $formatted_time; ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Municipality']); ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Attraction']); ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Profile']); ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Environment']); ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Pacing']); ?></td>
-                                                        <td><?php echo htmlspecialchars($activity['Transportation']); ?></td>
-                                                        <td>PHP <?php echo number_format($activity['Fee'], 2); ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    $start_time += $duration_per_activity; // Increment the start time
-                                                endforeach;
-                                            else: // Rest day
-                                                ?>
-                                                <tr class="rest-day">
-                                                    <td colspan="12"><?php echo "Day $day (Rest Day)"; ?> - Take a break and recharge for your next adventure!</td>
-                                                </tr>
-                                                
-                                                <?php
-                                            endif;
-                                        endfor;
-                                        ?>
-                                        
-
-                                    </tbody>
-                                </table>
-
-                            </div>  
-
-                        </div>
-                    </div>
-
-
-                    <hr>
-                    <?php 
-                        $cityHtmlContent = ob_get_clean();
-                        $fileName = preg_replace('/[^a-zA-Z0-9]/', '_', $city_place) . '.html';
-                        
-                        // Specify the folder where the HTML files will be stored
-                        $folderPath = 'htmlFiles/'; // Ensure this folder exists
-                        
-                        // Correctly construct the file path
-                        $filePath = $folderPath . $fileName;
-                        
-                        // Save the file in the specified folder
-                        file_put_contents($filePath, $cityHtmlContent);
-                    echo $cityHtmlContent;
-                endforeach; 
+                    <tr>
+                    <td style="text-align: center;"><?php echo "Day $day"; ?></td>
+                    <td><?php echo htmlspecialchars($activity['ActivityName']); ?></td>
+                    <td><?php echo $formatted_time; ?></td>
+                    <td><?php echo htmlspecialchars($activity['Municipality']); ?></td>
+                    <td><?php echo htmlspecialchars($activity['Attraction']); ?></td>
+                    <td><?php echo htmlspecialchars($activity['Profile']); ?></td>
+                    <td><?php echo htmlspecialchars($activity['Environment']); ?></td>
+                    <td><?php echo htmlspecialchars($activity['Pacing']); ?></td>
+                    <td><?php echo htmlspecialchars($activity['Transportation']); ?></td>
+                    <td>PHP <?php echo number_format($activity['Fee'], 2); ?></td>
+                    </tr>
+                    <?php
+                    $start_time += $duration_per_activity; // Increment the start time
+                    endforeach;
+                    else: // Rest day
                     ?>
+                    <tr class="rest-day">
+                    <td colspan="12"><?php echo "Day $day (Rest Day)"; ?> - Take a break and recharge for your next adventure!</td>
+                    </tr>
+                    
+                    <?php
+                    endif;
+                endfor;
+                ?>
+                
+
+                </tbody>
+                </table>
+
+                </div>  
+
+            </div>
+            </div>
+
+
+            <hr>
+            <?php 
+            $cityHtmlContent = ob_get_clean();
+            $fileName = preg_replace('/[^a-zA-Z0-9]/', '_', $city_place) . '.html';
+            
+            // Specify the folder where the HTML files will be stored
+            $folderPath = 'htmlFiles/'; // Ensure this folder exists
+            
+            // Correctly construct the file path
+            $filePath = $folderPath . $fileName;
+            
+            // Save the file in the specified folder
+            file_put_contents($filePath, $cityHtmlContent);
+            echo $cityHtmlContent;
+            endforeach; 
+            ?>
             </div>
         <?php endif; ?>
 
