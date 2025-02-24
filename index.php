@@ -958,6 +958,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
 
+        <center>
+            <img src="images\Upgrade.png" alt="Upgrade" style="margin-top: 20px;">
+        </center>
+
     </body>
 </html>
 
