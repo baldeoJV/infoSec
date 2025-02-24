@@ -317,7 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $("#loginBtn").click(function () {
                 let username = $("#username").val();
                 let password = $("#password").val();
-                console.log(username, password);
+
                 $.ajax({
                     url: "authenticate.php",
                     type: "POST",
